@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MONO Resume — Красніков Сергій</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000000;
+    --surface:#121212;
+    --surface-2:#1c1c1e;
+    --line:#262628;
+    --text:#ffffff;
+    --muted:#8e8e93;
+    --muted-2:#aeaeb2;
+    --accent:#ffe600;        /* теплий «світловий» акцент */
+    --accent-soft:#2a2a14;
+    --radius:22px;
+    --radius-sm:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding:24px 16px 64px;
+  }
+  .wrap{max-width:880px;margin:0 auto}
+
+  /* ── Top bar / wordmark ── */
+  .topbar{
+    display:flex;align-items:center;gap:12px;
+    padding:6px 4px 28px;
+  }
+  .mark{
+    display:flex;align-items:center;gap:10px;
+    font-weight:800;font-size:20px;letter-spacing:-.02em;
+  }
+  .mark .mono{color:var(--text)}
+  .mark .resume{color:var(--muted);font-weight:600}
+  .mark-cat{width:34px;height:34px;flex:0 0 auto}
+
+  /* ── Hero card ── */
+  .hero{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:32px;
+    display:flex;gap:28px;align-items:center;
+    position:relative;overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;right:-80px;top:-80px;
+    width:260px;height:260px;border-radius:50%;
+    background:radial-gradient(circle at center, rgba(255,230,0,.10), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-cat{width:128px;height:128px;flex:0 0 auto}
+  .hero-info{min-width:0}
+  .hero-info h1{
+    font-size:clamp(26px,5vw,38px);
+    font-weight:800;letter-spacing:-.03em;line-height:1.05;
+  }
+  .role{
+    margin-top:10px;color:var(--accent);
+    font-weight:600;font-size:15px;letter-spacing:.01em;
+  }
+  .tagline{margin-top:14px;color:var(--muted-2);font-size:15px;max-width:46ch}
+
+  /* ── Contact row ── */
+  .contacts{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;margin-top:16px;
+  }
+  .contact{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--radius-sm);padding:14px 16px;
+    display:flex;flex-direction:column;gap:2px;
+    text-decoration:none;color:var(--text);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  a.contact:hover{border-color:#3a3a3c;background:var(--surface-2)}
+  .contact .k{font-size:12px;color:var(--muted);font-weight:500}
+  .contact .v{font-size:15px;font-weight:600;letter-spacing:-.01em;word-break:break-word}
+
+  /* ── Sections ── */
+  section{margin-top:36px}
+  .sec-head{
+    display:flex;align-items:baseline;gap:12px;margin-bottom:16px;padding-left:4px;
+  }
+  .sec-head h2{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .sec-head .rule{flex:1;height:1px;background:var(--line)}
+
+  .card{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--radius);padding:24px 26px;
+  }
+  .card + .card{margin-top:14px}
+
+  .about{font-size:16px;color:var(--muted-2);line-height:1.65}
+  .about strong{color:var(--text);font-weight:600}
+
+  /* ── Experience / education item ── */
+  .item-title{font-size:18px;font-weight:700;letter-spacing:-.01em}
+  .item-sub{margin-top:3px;color:var(--accent);font-size:14px;font-weight:600}
+  .item-meta{margin-top:2px;color:var(--muted);font-size:13px}
+  .bullets{margin-top:14px;list-style:none;display:flex;flex-direction:column;gap:9px}
+  .bullets li{position:relative;padding-left:22px;color:var(--muted-2);font-size:15px}
+  .bullets li::before{
+    content:"";position:absolute;left:2px;top:9px;
+    width:7px;height:7px;border-radius:2px;background:var(--accent);
+  }
+
+  /* ── Skills ── */
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{
+    background:var(--surface-2);border:1px solid var(--line);
+    border-radius:999px;padding:9px 16px;font-size:14px;font-weight:500;color:var(--text);
+  }
+  .chip.key{background:var(--accent-soft);border-color:#46460f;color:#fff}
+
+  /* ── Languages ── */
+  .langs{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+  .lang{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px 18px}
+  .lang .name{font-weight:700;font-size:16px}
+  .lang .lvl{margin-top:3px;color:var(--muted);font-size:13px}
+  .bar{margin-top:11px;height:6px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+  .bar > span{display:block;height:100%;border-radius:6px;background:var(--accent)}
+
+  footer{margin-top:48px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
+  footer .cat-mini{width:26px;height:26px;vertical-align:middle;margin-bottom:6px}
+
+  @media (max-width:560px){
+    .hero{flex-direction:column;text-align:center;padding:26px 20px;gap:16px}
+    .hero-info h1{font-size:28px}
+    .tagline{margin-left:auto;margin-right:auto}
+    .card{padding:20px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Wordmark + cat (top-left) -->
+  <div class="topbar">
+    <!-- original cat-with-coin illustration -->
+    <svg class="mark-cat" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M16 22 L12 8 L26 18 Z" fill="#fff"/>
+      <path d="M48 22 L52 8 L38 18 Z" fill="#fff"/>
+      <path d="M18 20 L15 12 L23 17 Z" fill="#ffe600"/>
+      <path d="M46 20 L49 12 L41 17 Z" fill="#ffe600"/>
+      <circle cx="32" cy="30" r="18" fill="#fff"/>
+      <path d="M22 28 q4 -5 9 0" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M33 28 q4 -5 9 0" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M32 33 l-2 2 a1.4 1.4 0 0 0 2 2 a1.4 1.4 0 0 0 2 -2 Z" fill="#ffe600"/>
+      <circle cx="44" cy="49" r="10" fill="#ffe600" stroke="#caa800" stroke-width="2"/>
+      <text x="44" y="53" font-size="11" font-weight="800" text-anchor="middle" fill="#8a6d00" font-family="Manrope,sans-serif">₴</text>
+      <ellipse cx="32" cy="47" rx="6" ry="4.5" fill="#fff"/>
+    </svg>
+    <div class="mark"><span class="mono">MONO</span> <span class="resume">Resume</span></div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <svg class="hero-cat" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Котик MONO Resume з планшетом">
+      <!-- ears outer -->
+      <path d="M66 52 L56 16 L94 44 Z" fill="#f2f2f4"/>
+      <path d="M134 52 L144 16 L106 44 Z" fill="#f2f2f4"/>
+      <!-- ears inner -->
+      <path d="M71 48 L64 25 L88 43 Z" fill="#ffe600"/>
+      <path d="M129 48 L136 25 L112 43 Z" fill="#ffe600"/>
+      <!-- head -->
+      <circle cx="100" cy="78" r="46" fill="#f2f2f4"/>
+      <!-- happy closed eyes -->
+      <path d="M74 76 q9 -10 18 0" stroke="#0a0a0a" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <path d="M108 76 q9 -10 18 0" stroke="#0a0a0a" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <!-- cheeks -->
+      <circle cx="70" cy="92" r="6" fill="#ffe600" opacity=".5"/>
+      <circle cx="130" cy="92" r="6" fill="#ffe600" opacity=".5"/>
+      <!-- nose -->
+      <path d="M100 86 l-4.4 4.4 a2.9 2.9 0 0 0 4.4 4.4 a2.9 2.9 0 0 0 4.4 -4.4 Z" fill="#ffe600"/>
+      <!-- mouth -->
+      <path d="M100 95 q-6 6 -12 2 M100 95 q6 6 12 2" stroke="#0a0a0a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <!-- whiskers -->
+      <path d="M50 84 h22 M50 92 h22 M128 84 h22 M128 92 h22" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round"/>
+      <!-- body -->
+      <path d="M56 124 q44 -16 88 0 l3 54 q-47 14 -94 0 Z" fill="#f2f2f4"/>
+      <!-- tablet -->
+      <rect x="62" y="128" width="76" height="48" rx="9" fill="#0a0a0a"/>
+      <!-- chat lines on tablet -->
+      <rect x="73" y="139" width="32" height="9" rx="4.5" fill="#ffe600"/>
+      <rect x="73" y="154" width="46" height="9" rx="4.5" fill="#3a3a3c"/>
+      <!-- paws holding tablet -->
+      <ellipse cx="60" cy="152" rx="13" ry="9.5" fill="#f2f2f4" transform="rotate(-16 60 152)"/>
+      <ellipse cx="140" cy="152" rx="13" ry="9.5" fill="#f2f2f4" transform="rotate(16 140 152)"/>
+    </svg>
+    <div class="hero-info">
+      <h1>Красніков Сергій<br>Сергійович</h1>
+      <div class="role">Спеціаліст текстової підтримки клієнтів · Розробник Telegram-ботів</div>
+      <p class="tagline">Допомагаю користувачам у чаті швидко, спокійно та по суті. Будую цифрові рішення — і залишаюся поруч, коли потрібна підтримка.</p>
+    </div>
+  </div>
+
+  <!-- Contacts -->
+  <div class="contacts">
+    <a class="contact" href="tel:+380667561236"><span class="k">Телефон</span><span class="v">+380 66 756 12 36</span></a>
+    <a class="contact" href="mailto:krasnikov0212@gmail.com"><span class="k">Email</span><span class="v" style="font-size:13px;letter-spacing:-.02em">krasnikov0212@gmail.com</span></a>
+    <div class="contact"><span class="k">Локація</span><span class="v">Батумі, Грузія</span></div>
+    <div class="contact"><span class="k">Дата народження</span><span class="v">12 жовтня 2005</span></div>
+  </div>
+
+  <!-- About -->
+  <section id="about">
+    <div class="sec-head"><h2>Про мене</h2><span class="rule"></span></div>
+    <div class="card">
+      <p class="about">Розробник цифрових рішень та <strong>Telegram-ботів</strong> під запит клієнтів — від ідеї до впровадження й подальшого супроводу. Маю реальний досвід спілкування з користувачами в текстовому форматі: консультую, відповідаю на запитання та залагоджую конфліктні ситуації спокійно й аргументовано. <strong>Дуже швидко й грамотно друкую</strong>, тому в чаті почуваюся максимально впевнено. Шукаю роботу, де можу бути найкориснішим в <strong>підтримці клієнтів</strong>: уважно слухати, швидко знаходити рішення й залишати в людини приємне враження від звернення.</p>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="sec-head"><h2>Досвід</h2><span class="rule"></span></div>
+    <div class="card">
+      <div class="item-title">Фриланс — розробка та підтримка цифрових рішень</div>
+      <div class="item-sub">Розробник Telegram-ботів · Підтримка користувачів</div>
+      <div class="item-meta">Віддалено</div>
+      <ul class="bullets">
+        <li>Розробка цифрових рішень та Telegram-ботів для клієнтів під конкретні задачі.</li>
+        <li>Консультування й технічна підтримка користувачів після впровадження.</li>
+        <li>Допомога у вирішенні технічних питань у текстовому форматі — швидко та зрозуміло.</li>
+        <li>Робота в ролі підтримки на фрилансі для тих, кому вона була потрібна.</li>
+        <li>Залагодження складних і конфліктних звернень із збереженням лояльності клієнта.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education">
+    <div class="sec-head"><h2>Освіта</h2><span class="rule"></span></div>
+    <div class="card">
+      <div class="item-title">Бердянський державний педагогічний університет (БДПУ)</div>
+      <div class="item-sub">Факультет фізико-математичної, комп'ютерної та технологічної освіти</div>
+      <div class="item-meta">Спеціальність: Професійна освіта (Цифрові технології)</div>
+      <ul class="bullets">
+        <li>Навчання триває (4 курс бакалаврату, дистанційна форма).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="item-title">Бердянський НВК №1 «Мрія»</div>
+      <div class="item-sub">с. Нововасилівка, Запорізька область</div>
+      <div class="item-meta">Повна загальна середня освіта — завершив 11 класів</div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="sec-head"><h2>Навички</h2><span class="rule"></span></div>
+    <div class="card">
+      <div class="chips">
+        <span class="chip key">Швидкий набір тексту</span>
+        <span class="chip key">Грамотне письмове мовлення</span>
+        <span class="chip key">Клієнтоорієнтованість</span>
+        <span class="chip">Уважність до деталей</span>
+        <span class="chip">Робота з великим обсягом інформації</span>
+        <span class="chip">Цифрова грамотність</span>
+        <span class="chip">Швидкий пошук інформації</span>
+        <span class="chip">Вирішення конфліктних ситуацій</span>
+        <span class="chip">Відповідальність</span>
+        <span class="chip">Здатність швидко навчатися</span>
+        <span class="chip">Стресостійкість</span>
+        <span class="chip">Багатозадачність</span>
+        <span class="chip">Самоорганізація у віддаленій роботі</span>
+        <span class="chip">Базова автоматизація / програмування</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Languages -->
+  <section id="languages">
+    <div class="sec-head"><h2>Мови</h2><span class="rule"></span></div>
+    <div class="langs">
+      <div class="lang">
+        <div class="name">Українська</div>
+        <div class="lvl">Вільно</div>
+        <div class="bar"><span style="width:100%"></span></div>
+      </div>
+      <div class="lang">
+        <div class="name">Російська</div>
+        <div class="lvl">Вільно</div>
+        <div class="bar"><span style="width:100%"></span></div>
+      </div>
+      <div class="lang">
+        <div class="name">Англійська</div>
+        <div class="lvl">A2 — базовий</div>
+        <div class="bar"><span style="width:40%"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <svg class="cat-mini" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M14 22 L10 8 L24 18 Z" fill="#8e8e93"/>
+      <path d="M50 22 L54 8 L40 18 Z" fill="#8e8e93"/>
+      <circle cx="32" cy="34" r="18" fill="#8e8e93"/>
+      <circle cx="26" cy="32" r="2.6" fill="#000"/>
+      <circle cx="38" cy="32" r="2.6" fill="#000"/>
+    </svg>
+    <br>
+    MONO Resume · Красніков Сергій Сергійович<br>
+    Готовий до текстової підтримки клієнтів 🐾
+  </footer>
+
+</div>
+</body>
+</html>
